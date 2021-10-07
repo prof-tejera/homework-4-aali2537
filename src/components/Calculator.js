@@ -35,8 +35,16 @@ class Calculator extends Component {
 
   handleNumberClick = (number) => {
     if (!this.state.operator) {
+      //Handle case where user clicks decimal point multiple times in a row
+      if (number === "." && this.state.first.toString().slice(-1) === ".") {
+        return;
+      }
       this.setState({ first: `${this.state.first || ""}${number}` });
     } else {
+      //Handle case where user clicks decimal point multiple times in a row
+      if (number === "." && this.state.second.toString().slice(-1) === ".") {
+        return;
+      }
       this.setState({
         second: `${this.state.second || ""}${number}`,
         current: "second",
@@ -96,14 +104,17 @@ class Calculator extends Component {
   };
 
   getScreenValue = () => ({
-    first: parseFloat(this.state.first),
-    second: parseFloat(this.state.second),
+    first: this.state.first,
+    second: this.state.second,
     operator: this.state.operator,
   });
 
   render() {
     return (
       <Container>
+        <div>
+          {this.state.first} | {this.state.second}
+        </div>
         <Screen {...this.getScreenValue()} />
         <div style={{ display: "flex" }}>
           <NumPad>
@@ -138,8 +149,8 @@ class Calculator extends Component {
 //Proptype validation
 Screen.propTypes = {
   props: PropTypes.shape({
-    first: PropTypes.number,
-    second: PropTypes.number,
+    first: PropTypes.string,
+    second: PropTypes.string,
     operator: PropTypes.string,
   }),
 };

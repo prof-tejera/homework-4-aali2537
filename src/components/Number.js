@@ -9,11 +9,22 @@ const Container = styled.button`
   border-top: 0;
   font-size: 20px;
   flex: 1 1 33.3%;
+  transition: 0.2s;
+
   &:nth-child(3n) {
     border-right: 1px solid white;
   }
+
   &:nth-child(-n + 3) {
     border-top: 1px solid white;
+  }
+
+  &:hover {
+    background-color: #bfbfbf;
+  }
+
+  &:active {
+    background-color: #777777;
   }
 `;
 
