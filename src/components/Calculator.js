@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 
 import Number from "./Number";
 import Operator from "./Operator";
@@ -72,5 +73,18 @@ class Calculator extends Component {
     );
   }
 }
+
+//Proptype validation
+Screen.propTypes = {
+  value: PropTypes.number,
+};
+
+Number.propTypes = {
+  value: PropTypes.number,
+};
+
+Operator.propTypes = {
+  value: PropTypes.oneOf(["+", "/", "x", "-", "=", "clear"]),
+};
 
 export default Calculator;
