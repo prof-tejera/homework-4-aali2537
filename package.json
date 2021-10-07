@@ -9,7 +9,7 @@
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.1"
   },
-  "homepage": "https://prof-tejera.github.io/<repo>",
+  "homepage": "https://prof-tejera.github.io/homework-4-aali2537",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
