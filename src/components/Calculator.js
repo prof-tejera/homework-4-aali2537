@@ -36,13 +36,19 @@ class Calculator extends Component {
   handleNumberClick = (number) => {
     if (!this.state.operator) {
       //Handle case where user clicks decimal point multiple times in a row
-      if (number === "." && this.state.first.toString().slice(-1) === ".") {
+      if (
+        (number === "." && this.state.first.toString().slice(-1) === ".") ||
+        this.state.first.length === 55
+      ) {
         return;
       }
       this.setState({ first: `${this.state.first || ""}${number}` });
     } else {
       //Handle case where user clicks decimal point multiple times in a row
-      if (number === "." && this.state.second.toString().slice(-1) === ".") {
+      if (
+        (number === "." && this.state.second.toString().slice(-1) === ".") ||
+        this.state.second.length === 55
+      ) {
         return;
       }
       this.setState({

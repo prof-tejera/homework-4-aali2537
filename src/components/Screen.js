@@ -33,7 +33,11 @@ class Screen extends Component {
             ? `${this.props.first} ${this.props.operator}`
             : " "}
         </Operation>
-        <Result>{this.props.second || this.props.first}</Result>
+        <Result>
+          {this.props.first.length > 56
+            ? "Out Of Range Error"
+            : this.props.second || this.props.first}
+        </Result>
       </Container>
     );
   }
