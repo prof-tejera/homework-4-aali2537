@@ -2,15 +2,17 @@ import { Component } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
-  border: 1px solid black;
-  width: 300px;
+  width: 100%;
   height: 70px;
   text-align: right;
-  padding-right: 0.5em;
+  background-color: #72788d;
+  color: white;
   padding-top: 0.5em;
+  margin-bottom: 0.5em;
 `;
 
 const Result = styled.div`
+  margin-right: 0.5em;
   margin-top: 0em;
   margin-bottom: 1em;
   font-size: 22px;
@@ -19,6 +21,7 @@ const Result = styled.div`
 
 const Operation = styled.div`
   margin-bottom: 1em;
+  margin-right: 0.5em;
 `;
 
 class Screen extends Component {
@@ -28,7 +31,7 @@ class Screen extends Component {
         <Operation>
           {this.props.operator
             ? `${this.props.first} ${this.props.operator}`
-            : ""}
+            : " "}
         </Operation>
         <Result>{this.props.second || this.props.first}</Result>
       </Container>
