@@ -22,7 +22,7 @@ const OperatorPad = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  padding-left: 0.5em;
+  padding-left: 0.1em;
 `;
 
 class Calculator extends Component {

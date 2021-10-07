@@ -8,7 +8,7 @@ const Container = styled.div`
   background-color: #72788d;
   color: white;
   padding-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.1em;
 `;
 
 const Result = styled.div`

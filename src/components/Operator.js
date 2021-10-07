@@ -5,6 +5,7 @@ const Container = styled.button`
   padding: 1em;
   border: 1px solid white;
   border-bottom: 0;
+  border-right: 0;
   flex: 1 1 50%;
   background-color: #fb9617;
   &:last-child {
