@@ -112,9 +112,6 @@ class Calculator extends Component {
   render() {
     return (
       <Container>
-        <div>
-          {this.state.first} | {this.state.second}
-        </div>
         <Screen {...this.getScreenValue()} />
         <div style={{ display: "flex" }}>
           <NumPad>
