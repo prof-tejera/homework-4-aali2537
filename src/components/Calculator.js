@@ -84,13 +84,16 @@ class Calculator extends Component {
     }
   };
 
-  getScreenValue = () =>
-    parseFloat(this.state.second) || parseFloat(this.state.first);
+  getScreenValue = () => ({
+    first: parseFloat(this.state.first),
+    second: parseFloat(this.state.second),
+    operator: this.state.operator,
+  });
 
   render() {
     return (
       <Container>
-        <Screen value={this.getScreenValue()} />
+        <Screen {...this.getScreenValue()} />
         <div>
           First: {this.state.first} | Second: {this.state.second} | Current:{" "}
           {this.state.current} | Operator: {this.state.operator}
@@ -126,7 +129,11 @@ class Calculator extends Component {
 
 //Proptype validation
 Screen.propTypes = {
-  value: PropTypes.number,
+  props: PropTypes.shape({
+    first: PropTypes.number,
+    second: PropTypes.number,
+    operator: PropTypes.string,
+  }),
 };
 
 Number.propTypes = {
