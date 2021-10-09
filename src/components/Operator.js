@@ -11,10 +11,6 @@ const Container = styled.button`
   background-color: #fb9617;
   transition: 0.2s;
 
-  &:last-child {
-    border-bottom: 1px solid white;
-  }
-
   &:hover {
     background-color: #c87812;
   }
