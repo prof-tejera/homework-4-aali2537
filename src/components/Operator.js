@@ -7,7 +7,7 @@ const Container = styled.button`
   border: 1px solid white;
   border-bottom: 0;
   border-right: 0;
-  flex: 1 1 50%;
+  flex: 1 1 0.16%;
   background-color: #fb9617;
   transition: 0.2s;
 
