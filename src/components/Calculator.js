@@ -33,21 +33,32 @@ class Calculator extends Component {
     current: "first",
   };
 
+  //Determines if input has decimal already
+  hasDecimal = (number) => {
+    number = number + "";
+
+    if (number.indexOf(".") === -1) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   handleNumberClick = (number) => {
     if (!this.state.operator) {
-      //Handle case where user clicks decimal point multiple times in a row
+      //Handle muleiple decimal button click on first field and overflow
       if (
-        (number === "." && this.state.first.toString().slice(-1) === ".") ||
-        this.state.first.length === 55
+        (this.hasDecimal(this.state.first) && number === ".") ||
+        this.state.first.length >= 55
       ) {
         return;
       }
       this.setState({ first: `${this.state.first || ""}${number}` });
     } else {
-      //Handle case where user clicks decimal point multiple times in a row
+      //Handle multiple decimal button click on second field and overflow
       if (
-        (number === "." && this.state.second.toString().slice(-1) === ".") ||
-        this.state.second.length === 55
+        (this.hasDecimal(this.state.second) && number === ".") ||
+        this.state.second.length >= 55
       ) {
         return;
       }
