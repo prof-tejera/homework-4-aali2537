@@ -1,76 +1,180 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import Number from "./Number";
 import Operator from "./Operator";
 import Screen from "./Screen";
 
+const Container = styled.div`
+  border-radius: 5px;
+
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+`;
+
+const NumPad = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0em;
+`;
+
+const OperatorPad = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding-left: 0.1em;
+`;
+
 class Calculator extends Component {
   state = {
-    first: null,
+    first: 0,
     operator: null,
-    second: null,
+    second: 0,
+    current: "first",
+  };
+
+  //Determines if input has decimal already
+  hasDecimal = (number) => {
+    number = number + "";
+
+    if (number.indexOf(".") === -1) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   handleNumberClick = (number) => {
     if (!this.state.operator) {
+      //Handle muleiple decimal button click on first field and overflow
+      if (
+        (this.hasDecimal(this.state.first) && number === ".") ||
+        this.state.first.length >= 55
+      ) {
+        return;
+      }
       this.setState({ first: `${this.state.first || ""}${number}` });
     } else {
-      this.setState({ second: `${this.state.second || ""}${number}` });
+      //Handle multiple decimal button click on second field and overflow
+      if (
+        (this.hasDecimal(this.state.second) && number === ".") ||
+        this.state.second.length >= 55
+      ) {
+        return;
+      }
+      this.setState({
+        second: `${this.state.second || ""}${number}`,
+        current: "second",
+      });
     }
   };
 
   handleOperatorClick = (operator) => {
     if (operator === "=") {
-      const first = parseInt(this.state.first);
-      const second = parseInt(this.state.second);
+      const first = parseFloat(this.state.first);
+      const second = parseFloat(this.state.second);
 
       if (this.state.operator === "+") {
-        this.setState({ operator: null, first: first + second, second: null });
+        this.setState({
+          operator: null,
+          first: first + second,
+          second: 0,
+          current: "first",
+        });
       } else if (this.state.operator === "/") {
-        this.setState({ operator: null, first: first / second, second: null });
+        this.setState({
+          operator: null,
+          first: first / second,
+          second: 0,
+          current: "first",
+        });
       } else if (this.state.operator === "-") {
-        this.setState({ operator: null, first: first - second, second: null });
+        this.setState({
+          operator: null,
+          first: first - second,
+          second: 0,
+          current: "first",
+        });
       } else if (this.state.operator === "x") {
-        this.setState({ operator: null, first: first * second, second: null });
+        this.setState({
+          operator: null,
+          first: first * second,
+          second: 0,
+          current: "first",
+        });
       }
-    } else if (operator === "clear") {
-      this.setState({ first: null, second: null, operator: null });
+    } else if (operator === "Clear") {
+      this.setState({ first: 0, second: 0, operator: null });
+    } else if (operator === "+/-") {
+      if (this.state.current === "first") {
+        this.setState({
+          first: this.state.first - this.state.first * 2,
+        });
+      } else {
+        this.setState({
+          second: this.state.second - this.state.second * 2,
+        });
+      }
     } else {
       this.setState({ operator });
     }
   };
 
-  getScreenValue = () => this.state.second || this.state.first;
+  getScreenValue = () => ({
+    first: this.state.first,
+    second: this.state.second,
+    operator: this.state.operator,
+  });
 
   render() {
     return (
-      <>
-        <Screen value={this.getScreenValue()} />
+      <Container>
+        <Screen {...this.getScreenValue()} />
         <div style={{ display: "flex" }}>
-          <div>
-            <Number value={0} onClick={this.handleNumberClick} />
-            <Number value={1} onClick={this.handleNumberClick} />
-            <Number value={2} onClick={this.handleNumberClick} />
-            <Number value={3} onClick={this.handleNumberClick} />
-            <Number value={4} onClick={this.handleNumberClick} />
-            <Number value={5} onClick={this.handleNumberClick} />
-            <Number value={6} onClick={this.handleNumberClick} />
+          <NumPad>
             <Number value={7} onClick={this.handleNumberClick} />
             <Number value={8} onClick={this.handleNumberClick} />
             <Number value={9} onClick={this.handleNumberClick} />
-          </div>
-          <div style={{ paddingLeft: 10 }}>
-            <Operator value="+" onClick={this.handleOperatorClick} />
+            <Number value={4} onClick={this.handleNumberClick} />
+            <Number value={5} onClick={this.handleNumberClick} />
+            <Number value={6} onClick={this.handleNumberClick} />
+            <Number value={1} onClick={this.handleNumberClick} />
+            <Number value={2} onClick={this.handleNumberClick} />
+            <Number value={3} onClick={this.handleNumberClick} />
+            <Number value="+/-" onClick={this.handleOperatorClick} />
+            <Number value={0} onClick={this.handleNumberClick} />
+            <Number value="." onClick={this.handleNumberClick} />
+          </NumPad>
+          <OperatorPad>
+            <Operator value="Clear" onClick={this.handleOperatorClick} />
+
             <Operator value="/" onClick={this.handleOperatorClick} />
             <Operator value="x" onClick={this.handleOperatorClick} />
             <Operator value="-" onClick={this.handleOperatorClick} />
+            <Operator value="+" onClick={this.handleOperatorClick} />
             <Operator value="=" onClick={this.handleOperatorClick} />
-            <Operator value="clear" onClick={this.handleOperatorClick} />
-          </div>
+          </OperatorPad>
         </div>
-      </>
+      </Container>
     );
   }
 }
+
+//Proptype validation
+Screen.propTypes = {
+  props: PropTypes.shape({
+    first: PropTypes.string,
+    second: PropTypes.string,
+    operator: PropTypes.string,
+  }),
+};
+
+Number.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.number, PropTypes.oneOf([".", "+/-"])]),
+};
+
+Operator.propTypes = {
+  value: PropTypes.oneOf(["+", "/", "x", "-", "=", "Clear"]),
+};
 
 export default Calculator;

@@ -1,10 +1,31 @@
-import { Component } from 'react';
-import styled from 'styled-components';
+import { Component } from "react";
+import styled from "styled-components";
 
-const Container = styled.div`
-  padding: 10px;
-  border: 1px solid black;
-  width: 60px;
+const Container = styled.button`
+  padding: 1em;
+  background-color: #efefef;
+  border: 1px solid white;
+  border-right: 0;
+  border-top: 0;
+  font-size: 20px;
+  flex: 1 1 33.3%;
+  transition: 0.2s;
+
+  &:nth-child(3n) {
+    border-right: 1px solid white;
+  }
+
+  &:nth-child(-n + 3) {
+    border-top: 1px solid white;
+  }
+
+  &:hover {
+    background-color: #bfbfbf;
+  }
+
+  &:active {
+    background-color: #777777;
+  }
 `;
 
 class Number extends Component {
